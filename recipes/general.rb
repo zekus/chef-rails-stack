@@ -1,11 +1,11 @@
 # general components for server
 
 execute "locale-gen" do
-  command "locale-gen ru_RU.UTF-8"
+  command "locale-gen en_US.UTF-8"
 end
 
 include_recipe "apt"
-include_recipe "nodejs::install_from_package"
+include_recipe "nodejs"
 include_recipe "memcached"
 
 include_recipe "nginx"
