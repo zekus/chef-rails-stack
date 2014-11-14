@@ -34,7 +34,7 @@ if node['apps']
         owner pgd['username']
         encoding "utf8"
         template "template0"
-        locale "ru_RU.UTF8"
+        locale "en_US.UTF8"
       end
 
       pg_database_extensions "#{pgd['dbname']}" do
@@ -45,6 +45,7 @@ if node['apps']
 
   if (db_types.include? "mysql")
     include_recipe 'mysql::server'
+    include_recipe 'mysql::client'
 
     user = 'root'
     root_password = node['mysql']['server_root_password']
