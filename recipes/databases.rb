@@ -60,7 +60,7 @@ if node['apps']
       SQL
 
       execute "mysql create #{mdb['dbname']} and #{mdb['username']}" do
-        command "mysql -u root -p#{root_password} -e \"#{db_sql}\""
+        command "mysql -u root -p'#{root_password}' -e \"#{db_sql}\""
       end
     end
   end
