@@ -44,7 +44,7 @@ define :puma_config do
       :socket_path => socket_path,
       :state_path => state_path,
       :config_path => "#{config_path}/#{app_name}.rb",
-      :start => "#{prefix}puma -C #{config_path}/#{app_name}.rb",
+      :start => "#{prefix}puma -e production -C #{config_path}/#{app_name}.rb",
       :stop => "#{prefix}#{puma_ctl} stop",
       :restart => "#{prefix}#{puma_ctl} restart",
       :user => app_user
