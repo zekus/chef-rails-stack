@@ -10,7 +10,6 @@ server {
 
 server {
   listen 443;
-
   server_name <%= @domain_names.join(' ') %>;
 
   ssl on;
@@ -18,46 +17,10 @@ server {
   ssl_certificate_key <%= @ssl_certificate_key_path %>;
 
   root <%= @public_path %>;
-  
-  location / {
-    if ($http_origin ~* (<%= @domain_names.gsub('.','\.').join('|') %>)) {
-      set $cors "true";
-    }
-    if ($request_method = 'OPTIONS') {
-      set $cors "${cors}options";
-    }
-    if ($request_method = 'GET') {
-      set $cors "${cors}get";
-    }
-    if ($request_method = 'POST') {
-      set $cors "${cors}post";
-    }
-    if ($cors = "true") {
-      add_header 'Access-Control-Allow-Origin' "$http_origin";
-    }
-    if ($cors = "trueoptions") {
-      add_header 'Access-Control-Allow-Origin' "$http_origin";
-      add_header 'Access-Control-Allow-Credentials' 'true';    
-      add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
-      add_header 'Access-Control-Allow-Headers' 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
-      add_header 'Access-Control-Max-Age' 1728000;
-      add_header 'Content-Length' 0;
-      add_header 'Content-Type' 'text/plain charset=UTF-8';
-      return 204;
-    }
-    if ($cors = "trueget") {
-      add_header 'Access-Control-Allow-Origin' "$http_origin";
-      add_header 'Access-Control-Allow-Credentials' 'true';
-      add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
-      add_header 'Access-Control-Allow-Headers' 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
-    }
-    if ($cors = "truepost") {
-      add_header 'Access-Control-Allow-Origin' "$http_origin";
-      add_header 'Access-Control-Allow-Credentials' 'true';
-      add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
-      add_header 'Access-Control-Allow-Headers' 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
-    }
-  }
+
+  add_header Access-Control-Allow-Headers "X-Requested-With";
+  add_header Access-Control-Allow-Methods "GET, HEAD, OPTIONS";
+  add_header Access-Control-Allow-Origin "*";
 
   location ^~ /assets/ {
     gzip_static on;
