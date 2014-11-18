@@ -4,6 +4,7 @@ if node['apps']
       user app['user']
       domain_names app['domain_names']
       ruby_version (app['ruby_version'] || node['default_ruby_version'])
+      ssl_certificate app['ssl_certificate']
     end
   end
 end
