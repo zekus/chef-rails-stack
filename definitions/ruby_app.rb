@@ -34,9 +34,16 @@ define :ruby_app do
     end
   end
 
-  #create and enable nginx site
+  # create and enable nginx site
+  # We use a different template file depending on SSL
+  template_file = if current_app['ssl_certificate_bundle_path'].nil?
+    'nginx.conf.erb'
+  else
+    'nginx-ssl.conf.erb'
+  end
+
   template "#{node['nginx']['dir']}/sites-available/#{app_name}" do
-    source "rails-site.erb"
+    source template_file
     owner "root"
     group "root"
     mode 00644
@@ -45,14 +52,16 @@ define :ruby_app do
       :socket_path => socket_path,
       :domain_names => domain_names,
       :public_path => public_path,
-      })
+      :ssl_certificate_bundle_path => current_app['ssl_certificate_bundle_path'],
+      :ssl_certificate_key_path => current_app['ssl_certificate_key_path'],
+    })
   end
 
   nginx_site app_name do
     enable app_name
   end
 
-  #create monit
+  # monit
   template "/etc/monit/conf.d/#{app_name}" do
     user "root"
     owner "root"
@@ -79,6 +88,7 @@ define :ruby_app do
     create "644 #{app_user} adm"
   end
 
+  # database
   app_database app_name do
     info current_app
     config_path config_path
