@@ -4,14 +4,14 @@ upstream <%= @app_name %> {
 
 server {
   listen 80;
-  server_name <%= @server_names.join(' ') %>;
+  server_name <%= @domain_names.join(' ') %>;
   return 301 https://$host$request_uri;
 }
 
 server {
   listen 443;
 
-  server_name <%= @server_names.join(' ') %>;
+  server_name <%= @domain_names.join(' ') %>;
 
   ssl on;
   ssl_certificate <%= @ssl_certificate_bundle_path %>;
