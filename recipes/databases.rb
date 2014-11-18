@@ -4,8 +4,6 @@ if node['apps']
     case lib
     when 'postgresql'
       include_recipe 'postgresql'
-      include_recipe 'postgresql::contrib'
-      include_recipe 'postgresql::libpq'
     when 'mysql'
       include_recipe 'mysql'
     end
