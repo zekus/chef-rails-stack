@@ -15,6 +15,7 @@ depends "logrotate"
 depends "nginx"
 depends "mysql"
 depends "postgresql"
+depends 'redisio'
 #depends "unicorn"
 #depends "puma"
 

@@ -6,3 +6,4 @@ include_recipe "rails-stack::directories"
 include_recipe "rails-stack::apps"
 
 include_recipe "rails-stack::databases"
+include_recipe "rails-stack::redis"
